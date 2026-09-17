@@ -342,3 +342,35 @@ html:not(.motion) .final__brand{ display:none; }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
 }
+
+/* ── Лозунги ──────────────────────────────────────────────────────────
+   Голос бренду між «куди йдуть кошти» і сухою частиною зі статутом.
+   Набір дисплейний, як у .howit__text, але дрібніший: це не заголовок
+   секції, а репліка. Дві строфи поруч, а не один шестирядковий блок —
+   так видно, що це два окремі твердження.
+   .split ділить текст по рядках, тому кожен рядок лозунга проявляється
+   окремо: <br> тут працює на анімацію, а не проти неї.
+
+   Кегль підібраний вимірюванням, не на око: найдовший рядок
+   «А став частиною історії.» має лишатися цілим від 320 до 1440px —
+   розрив усередині рядка лозунга читається як помилка набору.
+   Базове правило йде ПЕРШИМ, медіа-запити після: специфічність у них
+   однакова, тому вирішує порядок. */
+.creed{ overflow:hidden; }
+.creed__grid{ display:grid; gap:var(--block-gap); }
+.creed__line{
+  margin:0; text-wrap:pretty;
+  font:500 clamp(1.35rem, .95rem + 1.6vw, 2rem)/1.25 var(--f-display);
+  letter-spacing:-.02em;
+}
+.creed__line--2{ color:var(--sand); }
+/* У дві колонки кегль має міряти колонку, а не вікно: на 1024px колонка
+   ~446px, і розмір, що годиться для повної ширини, там уже ламає рядок. */
+@media (min-width:1024px){
+  .creed__grid{ grid-template-columns:1fr 1fr; gap:clamp(40px,5vw,96px); }
+  .creed__line{ font-size:clamp(1.5rem, .6rem + 1.6vw, 2rem); }
+}
+/* На 320px контейнер лишає 280px — там не влазить навіть нижня межа clamp. */
+@media (max-width:360px){
+  .creed__line{ font-size:1.05rem; }
+}
